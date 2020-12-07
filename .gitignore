@@ -1,1 +1,3 @@
 .vagrant
+site/web/core
+site/vendor
