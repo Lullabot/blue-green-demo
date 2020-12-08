@@ -23,3 +23,4 @@ $settings['config_sync_directory'] = 'sites/default/files/config_0Ks9PnWaQ102Rck
 
 $colour = exec("hostname");
 $config['environment_indicator.indicator']['bg_color'] = $colour;
+$config['environment_indicator.indicator']['name'] = ucfirst($colour);
