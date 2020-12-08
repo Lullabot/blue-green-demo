@@ -13,6 +13,8 @@ else
   OTHER=blue
 fi
 
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null vagrant@$OTHER.local sudo systemctl stop mariadb
+
 for DATASET in $DATASETS
 do
   # Create a local snapshot based on the deployment. Note that the ID is used
@@ -31,3 +33,5 @@ do
   # sent.
   ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null vagrant@$OTHER.local sudo zfs rollback $OTHER/$DATASET@$ID
 done
+
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null vagrant@$OTHER.local sudo systemctl start mariadb
