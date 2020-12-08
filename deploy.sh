@@ -13,6 +13,10 @@ else
   OTHER=blue
 fi
 
+echo "This demo doesn't deploy or sync code.
+If you want to test that, do it by hand and press enter to continue..."
+read
+
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null vagrant@$OTHER.local sudo systemctl stop mariadb
 
 for DATASET in $DATASETS
@@ -35,3 +39,6 @@ do
 done
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null vagrant@$OTHER.local sudo systemctl start mariadb
+
+echo "This demo doesn't run database updates or clear caches.
+Do it now by hand on $OTHER if you need to."
