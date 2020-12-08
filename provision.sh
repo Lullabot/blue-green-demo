@@ -33,6 +33,14 @@ then
   # Copy over the site code.
   cp -a /vagrant/site /var/www/site
 
+  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+  php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+  php -r "unlink('composer-setup.php');"
+  pushd /var/www/site
+  composer install
+  popd
+
   # Set up the Drupal files directory. We change permissions after Drupal is
   # installed.
   ln -sv /var/www/files/public /var/www/site/web/sites/default/files
@@ -86,9 +94,10 @@ then
 
     apt-get -qq install -y mariadb-server mariadb-client
 
-    pushd /var/www/site
     echo "CREATE USER drupal@localhost IDENTIFIED BY 'drupal'" | mysql -u root
     echo "GRANT ALL PRIVILEGES ON *.* TO 'drupal'@localhost" | mysql -u root
+
+    pushd /var/www/site
     vendor/bin/drush site:install -y demo_umami
     vendor/bin/drush en -y environment_indicator
     vendor/bin/drush role:perm:add anonymous 'access environment indicator'
