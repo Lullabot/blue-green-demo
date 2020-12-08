@@ -28,7 +28,7 @@ then
 
   # Install the basic Drupal dependencies. It wouldn't be much more to do this
   # with Docker, but that's beyond the scope of proving out blue / green deployments.
-  apt-get -qq install -y php libapache2-mod-php php-mysql php-gd php-bcmath php-xml
+  apt-get -qq install -y php libapache2-mod-php php-mysql php-gd php-bcmath php-xml php-zip
 
   # Copy over the site code.
   cp -a /vagrant/site /var/www/site
