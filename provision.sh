@@ -90,6 +90,9 @@ then
     echo "CREATE USER drupal@localhost IDENTIFIED BY 'drupal'" | mysql -u root
     echo "GRANT ALL PRIVILEGES ON *.* TO 'drupal'@localhost" | mysql -u root
     vendor/bin/drush site:install -y demo_umami
+    vendor/bin/drush en -y environment_indicator
+    vendor/bin/drush role:perm:add anonymous 'access environment indicator'
+    vendor/bin/drush role:perm:add anonymous 'access toolbar'
     chown -Rv www-data:www-data /var/www/files
     popd
 

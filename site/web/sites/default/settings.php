@@ -20,3 +20,6 @@ $databases['default']['default'] = array (
   'driver' => 'mysql',
 );
 $settings['config_sync_directory'] = 'sites/default/files/config_0Ks9PnWaQ102Rck0sIptMbUmHiCgSMeOzKBUm4oqpozaZLG0ycNOMXlvsJP2_eZrlsqseN03nw/sync';
+
+$colour = exec("hostname");
+$config['environment_indicator.indicator']['bg_color'] = $colour;

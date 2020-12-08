@@ -1,3 +1,4 @@
 .vagrant
 site/web/core
 site/vendor
+site/web/modules/contrib/
