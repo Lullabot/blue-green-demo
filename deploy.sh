@@ -1,8 +1,8 @@
 #!/bin/bash -ex
 
 # A unique identifier for the deployment. This could be a version number, or a
-# date such as YYYY-MM-DD--#.
-ID=$1
+# date such as YYYY-MM-DD--#. In real setups this would be manually specified.
+ID=$(date +%Y-%m-%d-%H-%M-%S)
 DATASETS="db files"
 
 COLOUR=$(hostname)
