@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 # A unique identifier for the deployment. This could be a version number, or a
 # date such as YYYY-MM-DD--#. In real setups this would be manually specified.
