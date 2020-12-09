@@ -3,6 +3,7 @@
 # A unique identifier for the deployment. This could be a version number, or a
 # date such as YYYY-MM-DD--#. In real setups this would be manually specified.
 ID=$(date +%Y-%m-%d-%H-%M-%S)
+SSH="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 DATASETS="db files"
 
 COLOUR=$(hostname)
@@ -17,7 +18,7 @@ echo "This demo doesn't deploy or sync code.
 If you want to test that, do it by hand and press enter to continue..."
 read
 
-ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null vagrant@$OTHER.local sudo systemctl stop mariadb
+$SSH vagrant@$OTHER.local sudo systemctl stop mariadb
 
 for DATASET in $DATASETS
 do
@@ -31,14 +32,14 @@ do
   # unlikely snapshots will be wanted to be kept forever, eventually this
   # should be a parameter.
   zfs send -R -I $COLOUR/$DATASET@base $COLOUR/$DATASET@$ID | \
-    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null vagrant@$OTHER.local sudo zfs receive -F $OTHER/$DATASET
+    $SSH vagrant@$OTHER.local sudo zfs receive -F $OTHER/$DATASET
 
   # Roll back any local changes from the destination to the snapshot we just
   # sent.
-  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null vagrant@$OTHER.local sudo zfs rollback $OTHER/$DATASET@$ID
+  $SSH vagrant@$OTHER.local sudo zfs rollback $OTHER/$DATASET@$ID
 done
 
-ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null vagrant@$OTHER.local sudo systemctl start mariadb
+$SSH vagrant@$OTHER.local sudo systemctl start mariadb
 
 echo "This demo doesn't run database updates or clear caches.
 Do it now by hand on $OTHER if you need to."
